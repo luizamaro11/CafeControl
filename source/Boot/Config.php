@@ -12,7 +12,6 @@ define("CONF_DB_NAME", "fullstackphp");
  */
 define("CONF_URL_BASE", "https://www.cafecontrol.com.br");
 define("CONF_URL_TEST", "https://www.localhost/upinside/fsphp");
-define("CONF_URL_ADMIN", "/admin");
 
 /**
  * SITE
@@ -64,6 +63,7 @@ define("CONF_VIEW_PATH", __DIR__ . "/../../shared/views");
 define("CONF_VIEW_EXT", "php");
 define("CONF_VIEW_THEME", "cafeweb");
 define("CONF_VIEW_APP", "cafeapp");
+define("CONF_VIEW_ADMIN", "cafeadm");
 
 /**
  * UPLOAD
@@ -88,9 +88,17 @@ define("CONF_MAIL_PORT", "587");
 define("CONF_MAIL_USER", "luiz.developerphp@gmail.com");
 define("CONF_MAIL_PASS", "Maos_ao_alto_php");
 define("CONF_MAIL_SENDER", ["name" => "luiz henrique", "address" => "luiz.developerphp@gmail.com"]);
-define("CONF_MAIL_SUPPORT", "cursos@upinside.com.br");
+define("CONF_MAIL_SUPPORT", "luiz.developerphp@gmail.com");
 define("CONF_MAIL_OPTION_LANG", "br");
 define("CONF_MAIL_OPTION_HTML", true);
 define("CONF_MAIL_OPTION_AUTH", true);
 define("CONF_MAIL_OPTION_SECURE", "tls");
 define("CONF_MAIL_OPTION_CHARSET", "utf-8");
+
+/**
+* PAGAR.ME
+*/
+define("CONF_PAGARME_MODE", "test");
+define("CONF_PAGARME_LIVE", "apiPagarmeLive");
+define("CONF_PAGARME_TEST", "apiPagarmeTest");
+define("CONF_PAGARME_BACK", CONF_URL_BASE . "/pay/callback");

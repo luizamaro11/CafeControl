@@ -54,6 +54,23 @@ class User extends Model
         return $find->fetch();
     }
 
+    public function full_name()
+    {
+        return "{$this->first_name} {$this->last_name}";
+    }
+
+    /**
+     * @return string|null
+     */
+    public function photo(): ?string
+    {
+        if ($this->photo && file_exists(__DIR__ . "/../../" . CONF_UPLOAD_DIR . "/{$this->photo}")) {
+            return $this->photo;
+        }
+
+        return null;
+    }
+
     /**
      * @return bool
      */

@@ -76,7 +76,7 @@ class Auth extends Model
      * @param bool $save
      * @return bool
      */
-    public function login(string $email, string $password, bool $save = false): bool
+    public function login(string $email, string $password, int $level = 1, bool $save = false): bool
     {
         if (!is_email($email)) {
             $this->message->warning("O e-mail informado não é válido");
@@ -105,6 +105,11 @@ class Auth extends Model
             return false;
         }
 
+        if ($user->level < $level) {
+            $this->message->error("Desculpe, mas você não tem permissão para logar-se aqui");
+            return false;
+        }
+
         if (passwd_rehash($user->password)) {
             $user->password = $password;
             $user->save();
@@ -112,7 +117,6 @@ class Auth extends Model
 
         //LOGIN
         (new Session())->set("authUser", $user->id);
-        $this->message->success("Login efetuado com sucesso")->flash();
         return true;
     }
 

@@ -1,0 +1,32 @@
+#CONFIGURACAO DE URL
+.htaccess
+
+#PASTA DE CACHE
+storage/images/cache
+
+#BANCO DE DADOS
+DataModel.sql
+
+#COMPOSER
+
+vendor/
+composer.lock
+
+#DADOS PESSOAIS
+source/Boot/Config.php
+
+#PASTA DO CURSO E EXERCICIOS POR FORA
+pasta-do-curso/
+listas-de-exercicios/
+
+#PASTA DE OUTROS MODULOS DO CURSO
+00-fullstack-php-modules
+01-ola-mundo-vamos-comecar
+02-iniciando-do-zero-com-php
+03-manipulacao-e-tratamento
+04-php-orientado-a-objetos
+05-banco-de-dados-com-pdo
+06-seguranca-e-boas-praticas
+07-recursos-e-componentes
+
+fullstackphp/

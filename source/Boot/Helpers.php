@@ -85,6 +85,17 @@ function str_title(string $string): string
 }
 
 /**
+ * @param string $text
+ * @return string
+ */
+function str_textarea(string $text): string
+{
+    $text = filter_var($text, FILTER_SANITIZE_STRIPPED);
+    $arrayReplace = ["&#10;", "&#10;&#10;", "&#10;&#10;&#10;", "&#10;&#10;&#10;&#10;", "&#10;&#10;&#10;&#10;&#10;"];
+    return "<p>" . str_replace($arrayReplace, "</p><p>", $text) . "</p>";
+}
+
+/**
  * @param string $string
  * @param int $limit
  * @param string $pointer
@@ -119,6 +130,15 @@ function str_limit_chars(string $string, int $limit, string $pointer = "..."): s
 
     $chars = mb_substr($string, 0, mb_strrpos(mb_substr($string, 0, $limit), " "));
     return "{$chars}{$pointer}";
+}
+
+/**
+ * @param string $price
+ * @return string
+ */
+function str_price(?string $price): string
+{
+    return number_format((!empty($price) ? $price : 0), 2, ",", ".");
 }
 
 /**
@@ -180,6 +200,22 @@ function redirect(string $url): void
  */
 
 /**
+ * @return \Source\Models\User|null
+ */
+function user(): ?\Source\Models\User
+{
+    return \Source\Models\Auth::user();
+}
+
+/**
+* @return \Source\Core\Session
+*/
+function session(): \Source\Core\Session
+{
+    return new \Source\Core\Session();
+}
+
+/**
  * @param string|null $path
  * @param string $theme
  * @return string
@@ -207,9 +243,13 @@ function theme(string $path = null, string $theme = CONF_VIEW_THEME): string
  * @param int|null $height
  * @return string
  */
-function image(string $image, int $width, int $height = null): string
+function image(?string $image, int $width, int $height = null): ?string
 {
-    return url() . "/" . (new \Source\Support\Thumb())->make($image, $width, $height);
+    if ($image) {
+        return url() . "/" . (new \Source\Support\Thumb())->make($image, $width, $height);
+    } else {
+        return null;
+    }
 }
 
 /**
@@ -222,28 +262,48 @@ function image(string $image, int $width, int $height = null): string
  * @param string $date
  * @param string $format
  * @return string
+ * @throws Exception
  */
-function date_fmt(string $date = "now", string $format = "d/m/Y H\hi"): string
+function date_fmt(?string $date, string $format = "d/m/Y H\hi"): string
 {
+    $data = (empty($date) ? "now" : $date);
     return (new DateTime($date))->format($format);
 }
 
 /**
  * @param string $date
  * @return string
+ * @throws Exception
  */
-function date_fmt_br(string $date = "now"): string
+function date_fmt_br(?string $date): string
 {
+    $data = (empty($date) ? "now" : $date);
     return (new DateTime($date))->format(CONF_DATE_BR);
 }
 
 /**
  * @param string $date
  * @return string
+ * @throws Exception
  */
-function date_fmt_app(string $date = "now"): string
+function date_fmt_app(?string $date): string
 {
+    $data = (empty($date) ? "now" : $date);
     return (new DateTime($date))->format(CONF_DATE_APP);
+}
+
+function date_fmt_back(?string $date): ?string
+{
+    if (!$date) {
+        return null;
+    }
+
+    if (strpos($data, " ")) {
+        $date = explode(" ", $date);
+        return implode("-", array_reverse(explode("/", $date[0]))) . " " . $date[1];
+    }
+
+    return implode("-", array_reverse(explode("/", $date)));
 }
 
 /**
