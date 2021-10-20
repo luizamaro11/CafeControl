@@ -35,6 +35,7 @@ class Online extends Model
             return $find->count();
         }
 
+        $find->order("updated_at DESC");
         return $find->fetch(true);
     }
 
@@ -46,6 +47,10 @@ class Online extends Model
     {
         $session = new Session();
 
+        if ($clear) {
+            $this->clear();
+        }
+        
         if (!$session->has("online")) {
             $this->user = ($session->authUser ?? null);
             $this->url = (filter_input(INPUT_GET, "route", FILTER_SANITIZE_STRIPPED) ?? "/");
@@ -68,9 +73,6 @@ class Online extends Model
         $find->pages += 1;
         $find->save();
 
-        if ($clear) {
-            $this->clear();
-        }
 
         return $this;
     }
@@ -81,5 +83,10 @@ class Online extends Model
     private function clear()
     {
         $this->delete("updated_at <= NOW() - INTERVAL {$this->sessionTime} MINUTE", null);
+    }
+
+    public function user()
+    {
+        return (new User())->findById($this->user);
     }
 }

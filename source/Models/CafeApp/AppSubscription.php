@@ -41,6 +41,11 @@ class AppSubscription extends Model
 		return $this;
 	}
 
+	public function user()
+	{
+		return (new User())->findById($this->user_id);
+	}
+
 	public function plan()
 	{
 		return (new AppPlan())->findById($this->plan_id);
@@ -49,5 +54,34 @@ class AppSubscription extends Model
 	public function creditCard()
 	{
 		return (new AppCreditCard())->findById($this->card_id);
+	}
+
+	public function recurrence()
+	{
+		$recurrence = 0;
+		$activeSubscribers = $this->find("pay_status = :s", "s=active")->fetch(true);
+		
+		if ($activeSubscribers) {
+			foreach ($activeSubscribers as $subscriber) {
+				$recurrence += $subscriber->plan()->price;
+			}
+		}
+
+		return $recurrence;
+	}
+
+	public function recurrenceMonth()
+	{
+		$recurrence = 0;
+		$activeSubscribers = $this->find("pay_status = :s AND year(started) = year(now()) AND month(started) = month(now())",
+			"s=active")->fetch(true);
+		
+		if ($activeSubscribers) {
+			foreach ($activeSubscribers as $subscriber) {
+				$recurrence += $subscriber->plan()->price;
+			}
+		}
+
+		return $recurrence;
 	}
 }
