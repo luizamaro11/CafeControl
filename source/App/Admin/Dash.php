@@ -3,10 +3,12 @@
 namespace Source\App\Admin;
 
 use Source\Models\Post;
+use Source\Models\Auth;
 use Source\Models\Category;
+use Source\Models\Report\Online;
 use Source\Models\CafeApp\AppSubscription;
 use Source\Models\CafeApp\AppPlan;
-
+use Source\Models\User;
 
 class Dash extends Admin
 {
@@ -61,8 +63,8 @@ class Dash extends Admin
                 "categories" => (new Category())->find("type = 'post'")->count()
             ],
             "users" => (object)[
-                "users" => (new Post())->find("level < 5")->count(),
-                "admins" => (new Post())->find("level >= 5")->count()
+                "users" => (new User())->find("level < 5")->count(),
+                "admins" => (new User())->find("level >= 5")->count()
             ],
             "online" => "",
             "onlineCount" => ""

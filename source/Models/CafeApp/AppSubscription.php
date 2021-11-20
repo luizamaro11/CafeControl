@@ -3,6 +3,7 @@
 namespace Source\Models\CafeApp;
 
 use Source\Core\Model;
+use Source\Models\User;
 
 /**
  * 
@@ -41,21 +42,30 @@ class AppSubscription extends Model
 		return $this;
 	}
 
+	/**
+	 * @return User
+	 */
 	public function user()
 	{
 		return (new User())->findById($this->user_id);
 	}
 
+	/**
+	 * @return AppPlan
+	 */
 	public function plan()
 	{
 		return (new AppPlan())->findById($this->plan_id);
 	}
 
+	/**
+	 * @return AppCreditCard
+	 */
 	public function creditCard()
 	{
 		return (new AppCreditCard())->findById($this->card_id);
 	}
-
+	
 	public function recurrence()
 	{
 		$recurrence = 0;

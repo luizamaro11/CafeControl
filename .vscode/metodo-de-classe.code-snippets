@@ -1,0 +1,10 @@
+{
+	 "metodo-de-classe": {
+		"scope": "php",
+		"prefix": "pubf",
+		"body": [
+	 		"public function $nomeDoMetodo(){}",
+	 	],
+	 	"description": "Snippet para criar um método de uma classe"
+	 }
+}
