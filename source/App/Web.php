@@ -57,6 +57,9 @@ class Web extends Controller
      */
     public function about(): void
     {
+        var_dump('woo');
+        die;
+
         $head = $this->seo->render(
             "Descubra o " . CONF_SITE_NAME . " - " . CONF_SITE_DESC,
             CONF_SITE_DESC,
